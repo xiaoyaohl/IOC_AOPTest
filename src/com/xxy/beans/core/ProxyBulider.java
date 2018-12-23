@@ -74,6 +74,7 @@ public class ProxyBulider <T> implements IProxyBulider {
         List<IntercepterMethodDefinition> interBeforeList = intercepterFactory.getBeforeList(itd);
         List<IntercepterMethodDefinition> interAfterList = intercepterFactory.getAfterList(itd);
         List<IntercepterMethodDefinition> interExceptionList = intercepterFactory.getExceptionList(itd);
+//        System.out.println("前置拦截前：" + args[0]);
         if(interBeforeList != null) {
             for(IntercepterMethodDefinition imd : interBeforeList) {
                 if((boolean)imd.getMethod().invoke(imd.getObject(), args) == false) {
@@ -81,6 +82,8 @@ public class ProxyBulider <T> implements IProxyBulider {
                 }
             }
         }
+
+//        System.out.println("前置拦截后:" + args[0]);
         try {
             result =  method.invoke(object, args);
             if(interAfterList == null) {

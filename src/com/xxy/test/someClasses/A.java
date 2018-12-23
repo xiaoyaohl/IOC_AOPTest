@@ -3,30 +3,31 @@ package com.xxy.test.someClasses;
 import com.xxy.beans.annotation.Autowired;
 import com.xxy.beans.annotation.Component;
 
+import java.sql.SQLOutput;
+
 @Component
 public class A {
     @Autowired
     private B b;
-    private volatile static int count = 0;
+
     public A() {
     }
+
     public void setB(B b) {
         this.b = b;
     }
-    public void fun() {
+
+    public B getB() {
+        return b;
+    }
+
+    public void fun(B b) {
+//        System.out.println("自动注入的num：" + this.num);
         System.out.println("这是fun方法");
     }
+
     @Override
     public String toString() {
-        if(++count >= 2) {
-            try {
-                System.out.println(count);
-                Thread.sleep(1000000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println( "return 前：" + count);
         return "这是A - >B\n" + b;
     }
 }

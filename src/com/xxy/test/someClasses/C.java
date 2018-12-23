@@ -15,12 +15,16 @@ public class C {
         this.a = a;
     }
 
+    public A getA() {
+        return a;
+    }
+
     public void fun() {
 
     }
 
     @Override
     public String toString() {
-        return "这是C - >A" + a;
+        return "这是C - >A";
     }
 }

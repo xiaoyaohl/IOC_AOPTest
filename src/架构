@@ -1,1 +1,22 @@
-首先应该先创建好BeanDefinitionHolder
+IOC(DI) : 控制反转（依赖注入）
+AOP : 面向切面编程
+JDKPRroxy\CGLIBProxy : 代理机制
+包扫描
+    DefaultBeanFactory实现了bean的扫描，由于只实现了延迟加载，所以将所有扫描到的bean的基本信息存入
+    BeanDefinitionHolderMap中；
+    对外提供的getBean(Class<?> klass)方法：
+    首先，从BeanMap中通过beanName获取指定的Bean，beanName为klass.getName()方法的返回值，为了简单，
+    没有学习spring创建一个新的beanName的方法。
+    当然，还应该提供通过别名获取指定bean的方法。因此需要先获取到真正的beanName，然后再获取bean。
+    如果BeanMap找不到相关的bean，则在BeanDefinitionHolderMap中查找对应的BeanDefinitionHolder，
+    如果找到了，初始化相关的bean；如果找不到，则意味着没有扫描到该类，应该抛出异常。
+    在执行getBean(Class<?> klass)方法时，如果beanMap中不存在，但是BeanDefinitionHolderMap有相关的
+    BeanDefinitionHolder，则需要初始化bean。
+    在初始化的过程中，如果存在依赖关系（带有Autowired注解的成员），应该先初始化其依赖，存入beanMap，
+    如果有带有Bean注解的方法，也应该自动执行并存入BeanMap;
+
+
+
+
+一处逻辑错误 —— 例：spring可以将gson加载到beanMap形成一个bean。但是gson的源码并不会加上@Component注解
+类D的自动装载错误!

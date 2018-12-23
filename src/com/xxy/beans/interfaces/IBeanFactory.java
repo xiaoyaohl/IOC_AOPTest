@@ -8,5 +8,5 @@ public interface IBeanFactory {
     void setBeanDefinitionHolder(BeanDefinitionHolder beanDefinitionHolder);
     BeanDefinitionHolder getBeanDefinitionHolder(String beanName);
     <T> T getBean(String name) throws Exception;
-    <T> T createBean(BeanDefinitionHolder beanDefinitionHolder);
+    <T> T createBean(BeanDefinitionHolder beanDefinitionHolder) throws Exception;
 }

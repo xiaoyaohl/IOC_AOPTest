@@ -49,9 +49,9 @@ public class DefaultIntercepterFactory {
             }
             Before before = method.getAnnotation(Before.class);
             Class<?> targetClass = before.klass();
-            String methodName = before.method();
+            String targetMethodName = before.method();
             Class<?>[] parasType = before.parasType();
-            doDealMethod(object, method, targetClass, methodName, BEFORE, parasType);
+            doDealMethod(object, method, targetClass, targetMethodName, BEFORE, parasType);
         } else if(method.isAnnotationPresent(After.class)) {
             if(!method.getReturnType().equals(Object.class)) {
                 return;
@@ -73,9 +73,10 @@ public class DefaultIntercepterFactory {
         }
     }
 
-    private void doDealMethod(Object object, Method method, Class<?> targetClass, String methodName, String type, Class<?>[] parasType) throws Exception {
+    private void doDealMethod(Object object, Method method, Class<?> targetClass, String targetMethodName, String type,
+                              Class<?>[] parasType) throws Exception {
         try {
-            Method targetMethod = targetClass.getMethod(methodName, parasType);
+            Method targetMethod = targetClass.getMethod(targetMethodName, parasType);
             IntercepterTargetDefinition intercepterTargetDefinition =
                     new IntercepterTargetDefinition(targetClass, targetMethod);
             IntercepterMethodDefinition intercepterMethodDefinition =
@@ -88,7 +89,7 @@ public class DefaultIntercepterFactory {
                 intercepterFactory.addExceptionIntercepter(intercepterTargetDefinition, intercepterMethodDefinition);
             }
         } catch (NoSuchMethodException e) {
-            throw new NoSuchMethodException("找不到对应的方法" + methodName +
+            throw new NoSuchMethodException("找不到对应的方法" + targetMethodName +
                     "(" + method.getParameterTypes() + ")");
         }
     }
