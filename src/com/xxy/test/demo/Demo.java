@@ -18,6 +18,7 @@ public class Demo {
         a.fun(b);
         System.out.println(b.getNum());
         D d = defaultBeanFactory.getproxy(D.class);
+        System.out.println(a);
         System.out.println(d);
     }
 }
